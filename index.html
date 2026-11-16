@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DoeFácil | Solidariedade que conecta</title>
+
+<style>
+:root {
+  --blue: #244675;
+  --blue-light: #E8EEF8;
+  --white: #FFFFFF;
+  --text: #263238;
+  --green: #237A57;
+  --orange: #A65A00;
+  --pink: #f7dce8;
+  --pink-light: #fff5f9;
+  --border: #e8edf2;
+  --shadow: 0 10px 30px rgba(36,70,117,.10);
+  --radius: 18px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--pink-light);
+  color: var(--text);
+}
+
+button, input, select, textarea { font: inherit; }
+
+.app { min-height: 100vh; }
+
+/* MENU LATERAL */
+.sidebar {
+  width: 250px;
+  background: linear-gradient(180deg,#244675 0%,#31598b 100%);
+  color: white;
+  padding: 24px 16px;
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 20;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 10px 28px;
+}
+
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: white;
+  color: var(--blue);
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  font-weight: bold;
+}
+
+.logo-area h2 { margin: 0; font-size: 22px; }
+.logo-area small { color: #dce7f7; }
+
+.menu-label {
+  color: #c8d6e9;
+  font-size: 11px;
+  letter-spacing: 1px;
+  margin: 22px 10px 10px;
+}
+
+.menu-btn {
+  width: 100%;
+  border: 0;
+  color: #eaf0fa;
+  background: transparent;
+  padding: 13px 14px;
+  border-radius: 12px;
+  text-align: left;
+  cursor: pointer;
+  margin: 3px 0;
+  font-size: 14px;
+}
+
+.menu-btn:hover, .menu-btn.active {
+  background: rgba(255,255,255,.17);
+  color: white;
+}
+
+.sidebar-footer {
+  position: absolute;
+  bottom: 24px;
+  left: 20px;
+  right: 20px;
+  color: #dce7f7;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+/* CONTEÚDO */
+.main {
+  margin-left: 250px;
+  padding: 28px 34px 50px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.topbar h1 { margin: 0; font-size: 25px; color: var(--blue); }
+.topbar p { margin: 5px 0 0; color: #718096; font-size: 13px; }
+
+.user-area {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--pink);
+  display: grid;
+  place-items: center;
+  color: var(--blue);
+  font-weight: bold;
+}
+
+.page { display: none; }
+.page.active { display: block; }
+
+.section-title {
+  color: var(--blue);
+  font-size: 21px;
+  margin: 0 0 8px;
+}
+
+.section-description {
+  color: #718096;
+  font-size: 14px;
+  margin: 0 0 24px;
+}
+
+/* CARTÕES */
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  box-shadow: var(--shadow);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.stat-card { padding: 20px; }
+
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+  background: var(--blue-light);
+  display: grid;
+  place-items: center;
+  font-size: 21px;
+  margin-bottom: 14px;
+}
+
+.stat-card strong {
+  display: block;
+  color: var(--blue);
+  font-size: 27px;
+}
+
+.stat-card span {
+  color: #718096;
+  font-size: 13px;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 20px;
+}
+
+.card h3 {
+  color: var(--blue);
+  margin: 0 0 17px;
+  font-size: 17px;
+}
+
+.welcome {
+  background: linear-gradient(120deg,#244675,#4773a9);
+  color: white;
+  border-radius: var(--radius);
+  padding: 28px;
+  margin-bottom: 22px;
+}
+
+.welcome h2 { font-size: 25px; margin: 0 0 10px; }
+.welcome p { color: #e4ecf8; line-height: 1.6; max-width: 600px; }
+.welcome button { background: white; color: var(--blue); }
+
+.quick-actions {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 12px;
+}
+
+.quick-action {
+  padding: 17px;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.quick-action:hover { border-color: var(--blue); }
+.quick-action strong { display: block; color: var(--blue); margin-bottom: 5px; }
+.quick-action span { color: #718096; font-size: 12px; }
+
+/* BOTÕES */
+.btn {
+  border: 0;
+  background: var(--blue);
+  color: white;
+  padding: 12px 18px;
+  border-radius: 11px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.btn:hover { opacity: .9; }
+.btn-green { background: var(--green); }
+.btn-light { background: var(--blue-light); color: var(--blue); }
+
+/* FORMULÁRIOS */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 17px;
+}
+
+.field { display: flex; flex-direction: column; gap: 7px; }
+.field.full { grid-column: 1 / -1; }
+
+.field label {
+  font-size: 13px;
+  font-weight: bold;
+  color: var(--blue);
+}
+
+.field input, .field select, .field textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #fff;
+  outline: none;
+}
+
+.field input:focus, .field select:focus, .field textarea:focus {
+  border-color: var(--blue);
+}
+
+.field textarea { min-height: 90px; resize: vertical; }
+
+.form-actions { margin-top: 20px; }
+
+/* CATÁLOGO */
+.filters {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.filters input, .filters select {
+  padding: 11px 13px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: white;
+}
+
+.catalog-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 18px;
+}
+
+.product-card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.product-image {
+  height: 145px;
+  display: grid;
+  place-items: center;
+  font-size: 65px;
+  background: var(--blue-light);
+}
+
+.product-info { padding: 17px; }
+.product-info h3 { margin: 0 0 7px; color: var(--blue); }
+.product-info p { margin: 0 0 13px; color: #718096; font-size: 13px; }
+.tag {
+  display: inline-block;
+  background: #e5f4ed;
+  color: var(--green);
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  margin-bottom: 12px;
+}
+
+/* TABELA */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; min-width: 500px; }
+th, td {
+  padding: 14px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 13px;
+}
+th { color: var(--blue); background: #f8faff; }
+.status {
+  background: #e5f4ed;
+  color: var(--green);
+  border-radius: 20px;
+  padding: 5px 9px;
+  font-size: 11px;
+}
+
+/* AVISOS */
+.toast {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #244675;
+  color: white;
+  padding: 15px 20px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  display: none;
+  z-index: 100;
+  max-width: 300px;
+}
+
+/* LOGIN */
+.login-box {
+  max-width: 460px;
+  margin: 20px auto;
+}
+
+/* NAVEGAÇÃO MOBILE */
+.mobile-nav { display: none; }
+
+/* RESPONSIVIDADE */
+@media(max-width:1100px) {
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .catalog-grid { grid-template-columns: repeat(2,1fr); }
+}
+
+@media(max-width:900px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 22px 18px 100px; }
+  .dashboard-grid { grid-template-columns: 1fr; }
+  .mobile-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 -5px 20px rgba(0,0,0,.08);
+    padding: 9px 4px;
+    justify-content: space-around;
+    z-index: 30;
+  }
+  .mobile-nav button {
+    border: 0;
+    background: transparent;
+    color: var(--blue);
+    font-size: 11px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+}
+
+@media(max-width:600px) {
+  .stats-grid { grid-template-columns: repeat(2,1fr); gap: 10px; }
+  .stat-card { padding: 14px; }
+  .stat-card strong { font-size: 22px; }
+  .catalog-grid { grid-template-columns: 1fr; }
+  .form-grid { grid-template-columns: 1fr; }
+  .field.full { grid-column: auto; }
+  .topbar h1 { font-size: 20px; }
+  .user-area span { display: none; }
+  .welcome { padding: 22px; }
+  .welcome h2 { font-size: 21px; }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<aside class="sidebar">
+  <div class="logo-area">
+    <div class="logo">D</div>
+    <div>
+      <h2>DoeFácil</h2>
+      <small>Solidariedade que conecta</small>
+    </div>
+  </div>
+
+  <div class="menu-label">MENU PRINCIPAL</div>
+  <button class="menu-btn active" onclick="showPage('inicio',this)">🏠 Início</button>
+  <button class="menu-btn" onclick="showPage('doacoes',this)">💗 Fazer doação</button>
+  <button class="menu-btn" onclick="showPage('catalogo',this)">🎁 Catálogo</button>
+  <button class="menu-btn" onclick="showPage('painel',this)">📋 Gerenciar doações</button>
+
+  <div class="menu-label">CONTA</div>
+  <button class="menu-btn" onclick="showPage('conta',this)">👤 Cadastro / Login</button>
+
+  <div class="sidebar-footer">
+    <strong>DoeFácil – Rede de Doações</strong><br>
+    Conectando pessoas através da solidariedade.
+  </div>
+</aside>
+
+<main class="main">
+
+<header class="topbar">
+  <div>
+    <h1 id="pageTitle">Início</h1>
+    <p>Bem-vindo à plataforma DoeFácil!</p>
+  </div>
+  <div class="user-area">
+    <span id="userName">Visitante</span>
+    <div class="avatar">D</div>
+  </div>
+</header>
+
+<!-- INÍCIO -->
+<section class="page active" id="inicio">
+
+  <div class="welcome">
+    <h2>Solidariedade que conecta pessoas! 💙</h2>
+    <p>
+      O DoeFácil é uma plataforma de doações que conecta pessoas e incentiva
+      o compartilhamento de roupas, alimentos, livros, brinquedos e muitos
+      outros itens. Aquilo que está sobrando para você pode fazer a diferença na vida de alguém.
+    </p>
+    <button class="btn" onclick="showPage('doacoes')">Quero fazer uma doação</button>
+  </div>
+
+  <div class="stats-grid">
+    <div class="card stat-card">
+      <div class="stat-icon">🎁</div>
+      <strong id="totalDonations">12</strong>
+      <span>Doações cadastradas</span>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">🤝</div>
+      <strong>8</strong>
+      <span>Pessoas participantes</span>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">♻️</div>
+      <strong>12</strong>
+      <span>Itens reaproveitados</span>
+    </div>
+    <div class="card stat-card">
+      <div class="stat-icon">💚</div>
+      <strong>100%</strong>
+      <span>Compromisso solidário</span>
+    </div>
+  </div>
+
+  <div class="dashboard-grid">
+    <div class="card">
+      <h3>Sobre o projeto</h3>
+      <p style="line-height:1.7;color:#718096;font-size:14px">
+        O DoeFácil nasceu para aproximar pessoas que desejam doar itens de quem
+        precisa deles. Roupas, alimentos, livros, brinquedos e materiais
+        podem ganhar um novo destino por meio da solidariedade.
+      </p>
+      <p style="line-height:1.7;color:#718096;font-size:14px">
+        A doação ajuda a diminuir o desperdício, incentiva o consumo consciente
+        e fortalece os laços entre as pessoas da comunidade.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Acesso rápido</h3>
+      <div class="quick-actions">
+        <button class="quick-action" onclick="showPage('doacoes')">
+          <strong>💗 Fazer doação</strong>
+          <span>Cadastre um item</span>
+        </button>
+        <button class="quick-action" onclick="showPage('catalogo')">
+          <strong>🎁 Catálogo</strong>
+          <span>Veja os itens disponíveis</span>
+        </button>
+        <button class="quick-action" onclick="showPage('conta')">
+          <strong>👤 Minha conta</strong>
+          <span>Entre ou cadastre-se</span>
+        </button>
+        <button class="quick-action" onclick="showPage('painel')">
+          <strong>📋 Painel</strong>
+          <span>Veja as doações</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DOAÇÕES -->
+<section class="page" id="doacoes">
+  <h2 class="section-title">Cadastrar uma doação 💗</h2>
+  <p class="section-description">
+    Preencha as informações abaixo para cadastrar qualquer tipo de item.
+  </p>
+
+  <div class="card">
+    <form id="donationForm">
+      <div class="form-grid">
+        <div class="field">
+          <label for="donor">Nome do doador</label>
+          <input id="donor" required placeholder="Seu nome">
+        </div>
+
+        <div class="field">
+          <label for="emailDonation">E-mail</label>
+          <input id="emailDonation" type="email" required placeholder="seuemail@email.com">
+        </div>
+
+        <div class="field">
+          <label for="itemName">Nome do item</label>
+          <input id="itemName" required placeholder="Ex.: livro de histórias, tênis, arroz...">
+        </div>
+
+        <div class="field">
+          <label for="category">Categoria</label>
+          <select id="category" required>
+            <option value="">Selecione</option>
+            <option>Roupas</option>
+            <option>Calçados</option>
+            <option>Brinquedos</option>
+            <option>Livros</option>
+            <option>Materiais escolares</option>
+            <option>Alimentos</option>
+            <option>Utensílios domésticos</option>
+            <option>Produtos de higiene</option>
+            <option>Outros</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="quantity">Quantidade</label>
+          <input id="quantity" type="number" min="1" value="1" required>
+        </div>
+
+        <div class="field">
+          <label for="condition">Estado do item</label>
+          <select id="condition" required>
+            <option value="">Selecione</option>
+            <option>Novo</option>
+            <option>Em ótimo estado</option>
+            <option>Usado em bom estado</option>
+            <option>Não se aplica</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label for="description">Descrição</label>
+          <textarea id="description" placeholder="Conte um pouco sobre o item doado..."></textarea>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button class="btn" type="submit">Cadastrar doação</button>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- CATÁLOGO -->
+<section class="page" id="catalogo">
+  <h2 class="section-title">Catálogo de doações 🎁</h2>
+  <p class="section-description">
+    Confira alguns itens disponíveis na nossa demonstração.
+  </p>
+
+  <div class="filters">
+    <input id="searchProduct" placeholder="Pesquisar item..." oninput="filterProducts()">
+    <select id="filterCategory" onchange="filterProducts()">
+      <option value="">Todas as categorias</option>
+      <option>Roupas</option>
+      <option>Calçados</option>
+      <option>Brinquedos</option>
+      <option>Livros</option>
+      <option>Materiais escolares</option>
+      <option>Alimentos</option>
+      <option>Utensílios domésticos</option>
+      <option>Produtos de higiene</option>
+      <option>Outros</option>
+    </select>
+  </div>
+
+  <div class="catalog-grid" id="catalogGrid">
+    <article class="product-card" data-name="Camiseta básica" data-category="Roupas">
+      <div class="product-image">👕</div>
+      <div class="product-info">
+        <span class="tag">Disponível</span>
+        <h3>Camiseta básica</h3>
+        <p>Roupas • Tamanho M • Bom estado</p>
+        <button class="btn btn-light" onclick="requestItem('Camiseta básica')">Tenho interesse</button>
+      </div>
+    </article>
+
+    <article class="product-card" data-name="Tênis infantil" data-category="Calçados">
+      <div class="product-image" style="background:#f7dce8">👟</div>
+      <div class="product-info">
+        <span class="tag">Disponível</span>
+        <h3>Tênis infantil</h3>
+        <p>Calçados • Tamanho 30 • Bom estado</p>
+        <button class="btn btn-light" onclick="requestItem('Tênis infantil')">Tenho interesse</button>
+      </div>
+    </article>
+
+    <article class="product-card" data-name="Ursinho de pelúcia" data-category="Brinquedos">
+      <div class="product-image" style="background:#e5f4ed">🧸</div>
+      <div class="product-info">
+        <span class="tag">Disponível</span>
+        <h3>Ursinho de pelúcia</h3>
+        <p>Brinquedos • Em ótimo estado</p>
+        <button class="btn btn-light" onclick="requestItem('Ursinho de pelúcia')">Tenho interesse</button>
+      </div>
+    </article>
+
+    <article class="product-card" data-name="Livro de histórias" data-category="Livros">
+      <div class="product-image" style="background:#fff0d9">📚</div>
+      <div class="product-info">
+        <span class="tag">Disponível</span>
+        <h3>Livro de histórias</h3>
+        <p>Livros • Em ótimo estado</p>
+        <button class="btn btn-light" onclick="requestItem('Livro de histórias')">Tenho interesse</button>
+      </div>
+    </article>
+
+    <article class="product-card" data-name="Kit de cadernos" data-category="Materiais escolares">
+      <div class="product-image" style="background:#e8eef8">📒</div>
+      <div class="product-info">
+        <span class="tag">Disponível</span>
+        <h3>Kit de cadernos</h3>
+        <p>Materiais escolares • Novo</p>
+        <button class="btn btn-light" onclick="requestItem('Kit de cadernos')">Tenho interesse</button>
+      </div>
+    </article>
+
+    <article class="product-card" data-name="Alimentos não perecíveis" data-category="Alimentos">
+      <div class="product-image" style="background:#f7dce8">🥫</div>
+      <div class="product-info">
+        <span class="tag">Disponível</span>
+        <h3>Alimentos não perecíveis</h3>
+        <p>Alimentos • Embalagens fechadas</p>
+        <button class="btn btn-light" onclick="requestItem('Alimentos não perecíveis')">Tenho interesse</button>
+      </div>
+    </article>
+
+    <article class="product-card" data-name="Jogo de panelas" data-category="Utensílios domésticos">
+      <div class="product-image">🍲</div>
+      <div class="product-info">
+        <span class="tag">Disponível</span>
+        <h3>Jogo de panelas</h3>
+        <p>Utensílios domésticos • Bom estado</p>
+        <button class="btn btn-light" onclick="requestItem('Jogo de panelas')">Tenho interesse</button>
+      </div>
+    </article>
+
+    <article class="product-card" data-name="Kit de higiene" data-category="Produtos de higiene">
+      <div class="product-image" style="background:#e5f4ed">🧼</div>
+      <div class="product-info">
+        <span class="tag">Disponível</span>
+        <h3>Kit de higiene</h3>
+        <p>Produtos de higiene • Novo</p>
+        <button class="btn btn-light" onclick="requestItem('Kit de higiene')">Tenho interesse</button>
+      </div>
+    </article>
+
+    <article class="product-card" data-name="Cobertor" data-category="Outros">
+      <div class="product-image" style="background:#fff0d9">🛏️</div>
+      <div class="product-info">
+        <span class="tag">Disponível</span>
+        <h3>Cobertor</h3>
+        <p>Outros • Em ótimo estado</p>
+        <button class="btn btn-light" onclick="requestItem('Cobertor')">Tenho interesse</button>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PAINEL -->
+<section class="page" id="painel">
+  <h2 class="section-title">Gerenciamento de doações 📋</h2>
+  <p class="section-description">
+    Acompanhe os registros realizados nesta demonstração.
+  </p>
+
+  <div class="card">
+    <h3>Doações cadastradas</h3>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Doador</th>
+            <th>Item</th>
+            <th>Categoria</th>
+            <th>Quantidade</th>
+            <th>Condição</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="donationTable">
+          <tr>
+            <td>Maria</td>
+            <td>Camiseta</td>
+            <td>Roupas</td>
+            <td>1</td>
+            <td>Seminova</td>
+            <td><span class="status">Cadastrada</span></td>
+          </tr>
+          <tr>
+            <td>João</td>
+            <td>Calça</td>
+            <td>Roupas</td>
+            <td>1</td>
+            <td>Bom estado</td>
+            <td><span class="status">Cadastrada</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- CADASTRO E LOGIN -->
+<section class="page" id="conta">
+  <h2 class="section-title">Minha conta 👤</h2>
+  <p class="section-description">
+    Entre na sua conta ou faça um cadastro para participar do DoeFácil.
+  </p>
+
+  <div class="login-box">
+    <div class="card">
+      <div style="display:flex;gap:10px;margin-bottom:20px">
+        <button class="btn" id="tabLogin" onclick="switchAccount('login')">Entrar</button>
+        <button class="btn btn-light" id="tabRegister" onclick="switchAccount('register')">Cadastrar</button>
+      </div>
+
+      <form id="loginForm">
+        <h3>Bem-vindo de volta!</h3>
+        <div class="field" style="margin-bottom:15px">
+          <label for="loginEmail">E-mail</label>
+          <input id="loginEmail" type="email" required placeholder="seuemail@email.com">
+        </div>
+        <div class="field">
+          <label for="loginPassword">Senha</label>
+          <input id="loginPassword" type="password" required placeholder="Sua senha">
+        </div>
+        <div class="form-actions">
+          <button class="btn" type="submit">Entrar na conta</button>
+        </div>
+      </form>
+
+      <form id="registerForm" style="display:none">
+        <h3>Crie sua conta</h3>
+        <div class="field" style="margin-bottom:15px">
+          <label for="registerName">Nome completo</label>
+          <input id="registerName" required placeholder="Seu nome">
+        </div>
+        <div class="field" style="margin-bottom:15px">
+          <label for="registerEmail">E-mail</label>
+          <input id="registerEmail" type="email" required placeholder="seuemail@email.com">
+        </div>
+        <div class="field">
+          <label for="registerPassword">Senha</label>
+          <input id="registerPassword" type="password" minlength="4" required placeholder="Crie uma senha">
+        </div>
+        <div class="form-actions">
+          <button class="btn" type="submit">Criar cadastro</button>
+        </div>
+      </form>
+
+      <p style="font-size:11px;color:#8995a5;margin-top:20px">
+        Demonstração escolar: os dados ficam salvos apenas neste navegador.
+      </p>
+      <button class="btn btn-light" onclick="logout()">Sair da conta</button>
+    </div>
+  </div>
+</section>
+
+</main>
+</div>
+
+<!-- MENU MOBILE -->
+<nav class="mobile-nav">
+  <button onclick="showPage('inicio')">🏠<span>Início</span></button>
+  <button onclick="showPage('doacoes')">💗<span>Doar</span></button>
+  <button onclick="showPage('catalogo')">🎁<span>Catálogo</span></button>
+  <button onclick="showPage('painel')">📋<span>Painel</span></button>
+  <button onclick="showPage('conta')">👤<span>Conta</span></button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// NAVEGAÇÃO ENTRE AS PÁGINAS
+function showPage(page, button) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+
+  document.querySelectorAll('.menu-btn').forEach(b => b.classList.remove('active'));
+  if (button) button.classList.add('active');
+
+  const titles = {
+    inicio: 'Início',
+    doacoes: 'Fazer doação',
+    catalogo: 'Catálogo de doações',
+    painel: 'Gerenciar doações',
+    conta: 'Minha conta'
+  };
+
+  document.getElementById('pageTitle').textContent = titles[page];
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// AVISO NA TELA
+function notify(message) {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.style.display = 'block';
+  setTimeout(() => toast.style.display = 'none', 3000);
+}
+
+// DADOS DE DEMONSTRAÇÃO
+let donations = JSON.parse(localStorage.getItem('doefacilDonations') || '[]');
+
+function updateDonations() {
+  const table = document.getElementById('donationTable');
+
+  table.innerHTML = `
+    <tr>
+      <td>Maria</td><td>Camiseta</td><td>Roupas</td><td>1</td>
+      <td>Seminova</td><td><span class="status">Cadastrada</span></td>
+    </tr>
+    <tr>
+      <td>João</td><td>Calça</td><td>Roupas</td><td>1</td>
+      <td>Bom estado</td><td><span class="status">Cadastrada</span></td>
+    </tr>`;
+
+  donations.forEach(d => {
+    const row = document.createElement('tr');
+    [d.name, d.itemName || d.clothing || 'Item', d.category || 'Roupas', d.quantity || '1', d.condition || 'Não informado', 'Cadastrada'].forEach(value => {
+      const cell = document.createElement('td');
+      if (value === 'Cadastrada') {
+        const span = document.createElement('span');
+        span.className = 'status';
+        span.textContent = value;
+        cell.appendChild(span);
+      } else {
+        cell.textContent = value;
+      }
+      row.appendChild(cell);
+    });
+    table.appendChild(row);
+  });
+
+  document.getElementById('totalDonations').textContent = 12 + donations.length;
+}
+
+// CADASTRO DE DOAÇÃO
+document.getElementById('donationForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const donation = {
+    name: document.getElementById('donor').value,
+    email: document.getElementById('emailDonation').value,
+    itemName: document.getElementById('itemName').value,
+    category: document.getElementById('category').value,
+    quantity: document.getElementById('quantity').value,
+    condition: document.getElementById('condition').value,
+    description: document.getElementById('description').value
+  };
+
+  donations.push(donation);
+  localStorage.setItem('doefacilDonations', JSON.stringify(donations));
+
+  this.reset();
+  updateDonations();
+  notify('Doação cadastrada com sucesso! 💙');
+});
+
+// FILTRO DO CATÁLOGO
+function filterProducts() {
+  const search = document.getElementById('searchProduct').value.toLowerCase();
+  const category = document.getElementById('filterCategory').value;
+
+  document.querySelectorAll('.product-card').forEach(card => {
+    const name = card.dataset.name.toLowerCase();
+    const cardCategory = card.dataset.category;
+
+    const matchesName = name.includes(search);
+    const matchesCategory = !category || cardCategory === category;
+
+    card.style.display = matchesName && matchesCategory ? 'block' : 'none';
+  });
+}
+
+function requestItem(item) {
+  notify('Você demonstrou interesse em: ' + item + '. 💙');
+}
+
+// ALTERNAR LOGIN E CADASTRO
+function switchAccount(type) {
+  const login = type === 'login';
+
+  document.getElementById('loginForm').style.display = login ? 'block' : 'none';
+  document.getElementById('registerForm').style.display = login ? 'none' : 'block';
+
+  document.getElementById('tabLogin').className = login ? 'btn' : 'btn btn-light';
+  document.getElementById('tabRegister').className = login ? 'btn btn-light' : 'btn';
+}
+
+// CADASTRO DE USUÁRIO
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const user = {
+    name: document.getElementById('registerName').value,
+    email: document.getElementById('registerEmail').value,
+    password: document.getElementById('registerPassword').value
+  };
+
+  let users = JSON.parse(localStorage.getItem('doefacilUsers') || '[]');
+
+  if (users.some(u => u.email === user.email)) {
+    notify('Este e-mail já está cadastrado.');
+    return;
+  }
+
+  users.push(user);
+  localStorage.setItem('doefacilUsers', JSON.stringify(users));
+
+  this.reset();
+  switchAccount('login');
+  notify('Cadastro realizado! Agora entre na sua conta.');
+});
+
+// LOGIN
+document.getElementById('loginForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  const users = JSON.parse(localStorage.getItem('doefacilUsers') || '[]');
+
+  // Conta de demonstração
+  if (email === 'elo@demo.com' && password === 'elo123') {
+    localStorage.setItem('doefacilLoggedUser', 'Usuário DoeFácil');
+    updateUser();
+    notify('Login realizado com sucesso!');
+    return;
+  }
+
+  const user = users.find(u => u.email === email && u.password === password);
+
+  if (!user) {
+    notify('E-mail ou senha incorretos.');
+    return;
+  }
+
+  localStorage.setItem('doefacilLoggedUser', user.name);
+  updateUser();
+  notify('Bem-vindo(a), ' + user.name + '!');
+});
+
+function updateUser() {
+  const name = localStorage.getItem('doefacilLoggedUser') || 'Visitante';
+  document.getElementById('userName').textContent = name;
+  document.querySelector('.avatar').textContent =
+    name === 'Visitante' ? 'D' : name.charAt(0).toUpperCase();
+}
+
+function logout() {
+  localStorage.removeItem('doefacilLoggedUser');
+  updateUser();
+  notify('Você saiu da sua conta.');
+}
+
+// INICIAR
+updateDonations();
+updateUser();
+</script>
+
+</body>
+</html>
